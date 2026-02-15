@@ -1,5 +1,5 @@
 fastapi
 uvicorn
-catboost==1.2.2
 pandas
 pydantic
+catboost-linux-x86_64  # This uses a pre-compiled version for Linux
