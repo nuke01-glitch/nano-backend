@@ -30,11 +30,17 @@ def home():
 
 @app.post("/predict")
 def predict(data: NanoInput):
-    # Prepare data for model
-    input_df = pd.DataFrame([data.dict()])
+    # Manually define the list based on how you trained your model
+    feature_order = ['formula', 'size_nm', 'crystal_structure', 'material_class', 'shape']
+    
+    # Create the DataFrame using the dictionary, but enforce the order
+    data_dict = data.dict()
+    input_df = pd.DataFrame([data_dict])[feature_order] 
     
     # Get predictions
     preds = model.predict(input_df)
+    
+    # ... rest of your return logic
     
     # Return formatted results
     return {
@@ -43,4 +49,5 @@ def predict(data: NanoInput):
         "formation_energy": f"{preds[0][2]:.2f} eV",
         "specific_heat": f"{preds[0][3]:.4f} J/gK",
         "binding_energy": "193.39 eV (Baseline)" 
+
     }
